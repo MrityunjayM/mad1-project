@@ -1,4 +1,4 @@
 Flask
-Flask-SQLAlchemy
+Flask-SQLAlchemy==2.5.1
 Flask-bcrypt
 Flask-Login
