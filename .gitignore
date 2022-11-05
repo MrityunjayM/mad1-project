@@ -3,3 +3,5 @@ secret.txt
 load_env.sh
 
 blog_lite.sqlite3
+
+*.sql

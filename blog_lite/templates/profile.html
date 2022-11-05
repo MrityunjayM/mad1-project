@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    {{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
 {% block body %}
 
-<h1>This is Profile Page.</h1>
+<div class="card mb-3">
+    <img src="{{ url_for('static', filename='/images/profile.png') }}" class="card-img-top" 
+            height="200" alt="user profile" />
+    
+    <div class="card-body">
+        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+        
+        <p class="card-text">
+            <span class="badge text-bg-info fs-6">Blogs: {{ user.blogs | length }}</span>
+            <span class="badge text-bg-info fs-6">Following: {{ user.followings | length }}</span>
+            <span class="badge text-bg-info fs-6">Followers: {{ user.followers | length }}</span>
+        </p>
+    </div>
+</div>
+
+{% if user.blogs | length %}
+{% for blog in user.blogs %}
+
+{{ blog.title }}
+
+{% endfor %}
+{% endif %}
 
 {% endblock %}

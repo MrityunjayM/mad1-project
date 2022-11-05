@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="card p-3">
+    <form action="/profile/search" method="GET">
+        <div class="form-group d-flex justify-content-space-between">
+            <input type="search" id="profile" name="u" class="form-control flex-grow-1" minlength="3" />
+            <button type="submit" class="btn btn-primary" >search</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

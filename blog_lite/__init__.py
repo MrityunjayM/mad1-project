@@ -1,5 +1,6 @@
 from os import getenv, path
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 APP_SECRET = getenv("SECRET_KEY") or "thisisasecret"
@@ -17,15 +18,29 @@ def create_app():
     db.init_app(app)
     app.app_context().push()
 
-    from .views import home
+    # blog route blueprint
+    from .blogs import blog
+    app.register_blueprint(blog, url_prefix="/")
+    
+    # auth route blueprint
     from .auth import auth
-
-    app.register_blueprint(home, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
+    
+    # profile route blueprint
+    from .profile import profile
+    app.register_blueprint(profile, url_prefix="/profile")
 
-    from .models import User
+    from .models import User, Blog, Followers, Followings, Likes
 
     create_database()
+
+    # login setup
+    login_manager = LoginManager(app)
+    login_manager.login_view= "auth.login"
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.filter_by(id=user_id).first()
 
     return app
 

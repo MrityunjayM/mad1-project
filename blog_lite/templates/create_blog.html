@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="card text-center">    
+    <div class="card-body">
+        <form action="/blog/create" method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title" placeholder="Give a title for you blog" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Content:</label>
+                <textarea class="form-control" id="description" name="description" rows="3">
+                    Write your blog here.
+                </textarea>
+            </div>
+
+            <div class="d-flex justify-content-start mb-3 mb-lg-4">
+                <button type="submit" class="btn btn-primary px-4">Post</button>
+              </div>
+          </form>
+    </div>
+</div>
+
+{% endblock %}
