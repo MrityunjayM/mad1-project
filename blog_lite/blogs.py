@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 import os
 import nanoid
 from . import db
-from .models import Blog, Likes
+from .models import Blog, Likes, Followers
 
 BASE_PATH= os.path.abspath(os.path.curdir)
 
@@ -13,6 +13,7 @@ blog = Blueprint("blogs", __name__)
 @blog.route("/", methods=["GET"])
 @login_required
 def home():
+    followings = Followers.query.filter_by(follower_id=current_user.id).all()
     blogs = Blog.query.order_by(Blog.created_at.desc()).all()
     liked_posts = list(map(lambda l: l.blog_id, current_user.likes))
 

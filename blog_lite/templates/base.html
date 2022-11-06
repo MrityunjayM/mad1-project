@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
+    <style>
+      .container { max-width: 750px !important; }
+    </style>
+  </head>
 <body class="d-flex flex-column justify-content-between" style="min-height: 100vh;">
 
     <!-- Navbar -->
@@ -26,11 +29,11 @@
           <div class="collapse navbar-collapse flex-grow-0" id="navigationBar">
             <ul class="navbar-nav">
               {% if user.is_authenticated %}
-              <li class="nav-link">
-                <span class="badge text-bg-danger fw-semibold py-2">{{ user.first_name }}</span>
+              <li class="nav-item">
+                <a href="/profile/search" class="nav-link">Search</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link" href="/profile" title="profile">{{ user.first_name or 'Profile'}}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">LogOut</a>

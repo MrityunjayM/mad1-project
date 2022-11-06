@@ -42,7 +42,7 @@
         <h2 class="card-title">
             {{ blog.title }}
             <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}">
-                <i class="bi bi-star{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
+                <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
             </a>
         </h2>
         <p class="card-text">
@@ -50,6 +50,10 @@
         </p>
         <p class="card-text">{{ blog.description }}</p>
     </div>
+    <div class="card-footer text-muted">
+        Author: {{ blog.author.first_name }} {{ blog.author.last_name }}
+    </div>
+    
 </div>
 
 {% endfor %}

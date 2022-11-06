@@ -30,7 +30,7 @@ def create_app():
     from .profile import profile
     app.register_blueprint(profile, url_prefix="/profile")
 
-    from .models import User, Blog, Followers, Followings, Likes
+    from .models import User, Blog, Followers, Likes
 
     create_database()
 

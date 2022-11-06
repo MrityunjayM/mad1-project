@@ -10,8 +10,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
     blogs = db.relationship("Blog", backref="author")
     likes = db.relationship("Likes", backref="user")
-    followers = db.relationship("Followers", backref="followers")
-    followings = db.relationship("Followings", backref="followings")
+    followings = db.relationship("Followers", backref="follower")
 
 class Blog(db.Model):
     __tablename__ = "blog"
@@ -25,13 +24,14 @@ class Blog(db.Model):
 
 class Followers(db.Model):
     __tablename__ = "followers"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    follower_id = db.Column(db.Integer, primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
 
-class Followings(db.Model):
-    __tablename__ = "followings"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+# class Followings(db.Model):
+#     __tablename__ = "followings"
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+#     follower_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 class Likes(db.Model):
     __tablename__ = "likes"
