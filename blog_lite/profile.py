@@ -8,7 +8,28 @@ profile = Blueprint("profile", __name__)
 @profile.route("/", methods=["GET"])
 @login_required
 def home():
-    return render_template("profile.html", user=current_user)
+    q = request.args.get('display')
+    dis_followers = q == 'followers'
+    dis_followings = q == 'followings'
+    followings_users = []
+    followers = Followers.query.with_entities(Followers.user_id).filter_by(follower_id = current_user.id).all()
+    
+    fls = User.query.filter(User.id.in_([x for x, *y in followers])).all()
+
+    if dis_followings:
+        following = Followers.query.with_entities(
+            Followers.follower_id
+        ).filter_by(user_id = current_user.id).all()
+
+        maped_following_ids = {x for x, *y in following }
+        followings_users = User.query.filter(User.id.in_(maped_following_ids)).all()
+
+    return render_template("profile.html",
+                            dis_followers=dis_followers,
+                            dis_followings=dis_followings,
+                            followers=fls,
+                            followings=followings_users,
+                            user=current_user)
 
 
 @profile.route("/search", methods=["GET"])
@@ -42,16 +63,16 @@ def unfollow(follower_id: int):
     db.session.delete(flr)
     db.session.commit()
 
-    return redirect('/')
+    return redirect(request.referrer or '/')
 
-@profile.route("/followings", methods=["GET"])
-@login_required
-def followings():
-    followings = Followers.query.filter_by(follower_id=current_user.id).all()
-    return redirect(url_for("."))
+# @profile.route("/followings", methods=["GET"])
+# @login_required
+# def followings():
+#     followings = Followers.query.filter_by(follower_id=current_user.id).all()
+#     return redirect(url_for("."))
 
-@profile.route("/followers", methods=["GET"])
-@login_required
-def followers():
-    followers = Followers.query.filter_by(user_id = current_user.id).all()
-    return redirect(url_for("."))
+# @profile.route("/followers", methods=["GET"])
+# @login_required
+# def followers():
+#     followers = Followers.query.filter_by(user_id = current_user.id).all()
+#     return redirect(url_for("."))

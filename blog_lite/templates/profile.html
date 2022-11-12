@@ -15,37 +15,24 @@
         
         <p class="card-text">
             <span class="badge text-bg-info fs-6">Blogs: {{ user.blogs | length }}</span>
-            <span class="badge text-bg-info fs-6">Following: {{ user.followings | length }}</span>
-            <span class="badge text-bg-info fs-6">Followers: {{ user.followers | length }}</span>
+            <a class="badge text-bg-primary fs-6" href="/profile/?display=followings">
+                Following: {{ user.followings | length }}
+            </a>
+            <a class="badge text-bg-primary fs-6" href="/profile/?display=followwers">
+                Followers: {{ followers | length  }}
+            </a>
         </p>
     </div>
 </div>
 <hr />
 <br />
 
-{% if user.blogs | length %}
-{% for blog in user.blogs|reverse %}
-
-<div class="card mb-3" id="blog{{ blog.id }}">
-    {%if blog.image_path %}
-    <img src="{{ url_for('static', filename='images/') }}/{{ blog.image_path }}" 
-        class="card-img-top" height="250" alt="{{blog.image_path}}" />
-    {% endif %}
-    <div class="card-body">
-        <h2 class="card-title">
-            {{ blog.title }}
-            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}">
-                <i class="bi bi-star{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
-            </a>
-        </h2>
-        <p class="card-text">
-            <span class="text-muted">Likes: {{ blog.likes|length }}</span>
-        </p>
-        <p class="card-text">{{ blog.description }}</p>
-    </div>
-</div>
-
-{% endfor %}
+{% if dis_followers %}
+    {% include('user_followers.html') %}
+{% elif dis_followings %}
+    {% include('user_followings.html') %}
+{% elif user.blogs | length %}
+    {% include('user_blogs.html') %}
 {% endif %}
 
 {% endblock %}

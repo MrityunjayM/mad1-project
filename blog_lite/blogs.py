@@ -10,6 +10,11 @@ BASE_PATH= os.path.abspath(os.path.curdir)
 
 blog = Blueprint("blogs", __name__)
 
+@blog.route("/<user>", methods=["GET"])
+def display_user(user: str):
+    
+    return f"<h3>{user}</h3>", 200
+
 @blog.route("/", methods=["GET"])
 @login_required
 def home():
