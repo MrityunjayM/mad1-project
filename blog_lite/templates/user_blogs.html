@@ -1,4 +1,4 @@
-{% for blog in user.blogs|reverse %}
+{% for blog in blogs|reverse %}
 
 <div class="card mb-3" id="blog{{ blog.id }}">
     {%if blog.image_path %}
@@ -8,10 +8,10 @@
     <div class="card-body">
         <h2 class="card-title">
             {{ blog.title }}
-            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" style="font-size: 20px;">
+            <a title="Like" href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" style="font-size: 20px;">
                 <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
             </a>
-            <a href="/blog/{{ blog.id }}/edit" style="font-size: 20px;">
+            <a title="Edit" href="/blog/{{ blog.id }}/edit" style="font-size: 20px;">
                 <i class="bi bi-pencil-square"></i>
             </a>
         </h2>

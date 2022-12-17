@@ -1,7 +1,11 @@
 secret.txt
-
+__pycache__/*
+**/__pycache__/*
+environ
 load_env.sh
 
 blog_lite.sqlite3
+
+.prettierrc
 
 *.sql

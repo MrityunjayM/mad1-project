@@ -1,19 +1,25 @@
-from flask import Blueprint, request, render_template, \
-                    redirect, url_for
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 import os
 import nanoid
 from . import db
-from .models import Blog, Likes, Followers
+from .models import User, Blog, Likes, Followers
 
 BASE_PATH= os.path.abspath(os.path.curdir)
 
 blog = Blueprint("blogs", __name__)
 
-@blog.route("/<user>", methods=["GET"])
-def display_user(user: str):
-    
-    return f"<h3>{user}</h3>", 200
+@blog.route("/<string:username>", methods=["GET"])
+def display_user(username: str):
+    u = User.query.filter_by(username=username).first()
+    f = Followers.query.filter_by(user_id=u.id).all()
+
+    return render_template('searched_profile.html', 
+                            blogs=u.blogs,
+                            followers=f,
+                            followings=u.followings,
+                            searched_user=u, 
+                            user=current_user)
 
 @blog.route("/", methods=["GET"])
 @login_required
@@ -26,7 +32,7 @@ def home():
 
 @blog.route("/blogs/create", methods=["GET", "POST"])
 @login_required
-def blogs():
+def create_blog():
     if request.method == "POST":
         # Get Blog data from form
         title = request.form.get("title")
@@ -75,11 +81,28 @@ def edit_blog(blog_id: int):
 
     return render_template("edit_blog.html", blog=blog, user=current_user)
 
+@blog.route("/blog/<int:blog_id>/delete", methods=["GET"])
+@login_required
+def delete_blog(blog_id: int):
+    blog = Blog.query.get(blog_id)
+    if blog.author.id == current_user.id:
+        # delete all likes of the blog
+        Likes.query.filter_by(blog_id=blog_id).delete()
+        db.session.flush()
+        # delete blog
+        db.session.delete(blog)
+        db.session.commit()
+        return redirect(url_for('blogs.home'))
+    else:
+        flash('You can\'t delete others blog', category='danger')
+        return redirect(url_for('blogs.home'))
+
 @blog.route("/blog/<int:blog_id>/like/<int:user_id>", methods=["GET"])
 @login_required
 def like_blog(blog_id: int, user_id: int):
+    # create user like
     new_like = Likes(user_id=user_id, blog_id=blog_id)
-    
+    # add and commit queries
     db.session.add(new_like)
     db.session.commit()
     

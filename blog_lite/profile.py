@@ -29,6 +29,7 @@ def home():
                             dis_followings=dis_followings,
                             followers=fls,
                             followings=followings_users,
+                            blogs=current_user.blogs,
                             user=current_user)
 
 
