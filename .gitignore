@@ -1,5 +1,5 @@
-__pycache__/*
-blog_lite/__pycache__/*
+__pycache__/**
+blog_lite/__pycache__/**
 
 environ
 blog_lite.sqlite3
