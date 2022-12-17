@@ -1,11 +1,12 @@
-secret.txt
 __pycache__/*
-**/__pycache__/*
-environ
-load_env.sh
+blog_lite/__pycache__/*
 
+environ
 blog_lite.sqlite3
 
-.prettierrc
+load_env.sh
+secret.txt
 
+blog_lite/static/images/**.**
+.prettierrc
 *.sql

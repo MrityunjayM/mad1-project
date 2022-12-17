@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 import os
 import nanoid
 from . import db
-from .models import User, Blog, Likes, Followers
+from .models import User, Blog, Likes, Followers, Comments
 
 BASE_PATH= os.path.abspath(os.path.curdir)
 
@@ -115,3 +115,14 @@ def dislike_blog(blog_id: int, user_id: int):
     db.session.commit()
     
     return redirect(url_for("blogs.home") + f"#blog{blog_id}")
+
+@blog.route("/blog/<int:blog_id>/comments", methods=["POST"])
+@login_required
+def add_comment(blog_id: int):
+    user_id = current_user.id
+    comment = request.form.get('comment')
+    new_comment = Comments(comment=comment, user_id=user_id, blog_id=blog_id)
+
+    db.session.add(new_comment)
+    db.session.commit()
+    return redirect(url_for('blogs.home') + f"#blog{blog_id}")

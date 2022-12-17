@@ -1,0 +1,26 @@
+<div class="accordion" id="commenstAccordian">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="comments">
+        <button class="accordion-button bg-light-gray collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{blog.id}}" aria-expanded="false" aria-controls="collapse">
+          Comments
+        </button>
+      </h2>
+      <div id="collapse{{blog.id}}" class="accordion-collapse collapse hide" aria-labelledby="comments" data-bs-parent="#commenstAccordian">
+        <div class="accordion-body">
+          <!-- comments -->
+          {% for comment in blog.comments %}
+          <div class="card border-0 mb-1 bg-light-gray">
+            <div class="card-body py-1">
+              <h5 class="card-title fs-6">@{{ comment.author.first_name }} {{ comment.author.last_name }}</h5>
+              <p class="card-text">{{ comment.comment }}</p>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- comments -->
+          
+          <!-- include comment form -->
+          {% include 'add_comment.html' %}
+        </div>
+      </div>
+    </div>
+</div>
