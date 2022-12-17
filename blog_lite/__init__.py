@@ -1,5 +1,5 @@
 from os import getenv, path
-from flask import Flask
+from flask import Flask, redirect, flash
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
@@ -27,8 +27,14 @@ def create_app():
     app.register_blueprint(auth, url_prefix="/")
     
     # profile route blueprint
-    from .profile import profile
+    from .user_profile import profile
     app.register_blueprint(profile, url_prefix="/profile")
+
+    # register error handler
+    @app.errorhandler(Exception) 
+    def basic_error(e):
+        flash("Something went wrong!!", category='danger')   
+        return redirect('/')
 
     from .models import User
 

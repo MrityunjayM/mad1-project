@@ -16,6 +16,7 @@
     <style>
       .container { max-width: 750px !important; }
       a { text-decoration: none !important; }
+      .bg-light-gray { background-color: #f1f4f1 !important;}
     </style>
   </head>
 <body class="d-flex flex-column justify-content-between" style="min-height: 100vh;">
@@ -49,7 +50,7 @@
     </nav>
 
     <!-- main content -->
-    <main class="container flex-grow-1 py-3" style="background-color: #f4f4f4;">
+    <main class="container flex-grow-1 pt-2 mb-2" style="background-color: #f4f4f4;">
 
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -76,13 +77,12 @@
     </main>
 
     <!-- Footer -->
-    <div
-    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-    <!-- Copyright -->
-    <div class="text-white mb-3 mb-md-0">
-      Mrityunjay Mishra &COPY; 2022. All rights reserved.
-    </div>
-    <!-- Copyright -->
+    <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-dark">
+      <!-- Copyright -->
+      <div class="container text-white mb-3 mb-md-0">
+        Mrityunjay Mishra &COPY; 2022. All rights reserved.
+      </div>
+      <!-- Copyright -->
   </div>
 
     <!-- Bootstrap JS Link -->

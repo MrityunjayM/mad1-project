@@ -2,6 +2,7 @@
 
 {% block body %}
 
+<!-- create blog form -->
 <div class="card">    
     <div class="card-body">
         <form action="/blogs/create" method="post" enctype="multipart/form-data">
@@ -26,11 +27,12 @@
           </form>
     </div>
 </div>
-
+<!-- create blog form -->
 <hr />
 <br />
 <!-- =================================== -->
 
+<!-- Blog feed -->
 {%for blog in blogs %}
 
 <div class="card mb-3" id="blog{{ blog.id }}">
@@ -40,22 +42,20 @@
     {% endif %}
     <div class="card-body">
         <h2 class="card-title">
-            {{ blog.title }}
-            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" style="font-size: 20px;">
+            {{ blog.title }} <span class="text-muted fs-5">@{{ blog.author.first_name }} {{ blog.author.last_name }}</span>
+            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" class="fs-5 float-end">
                 <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
+                <span class="text-muted"> {{ blog.likes|length }}</span>
             </a>
         </h2>
-        <p class="card-text">
-            <span class="text-muted">Likes: {{ blog.likes|length }}</span>
-        </p>
+
         <p class="card-text">{{ blog.description }}</p>
     </div>
-    <div class="card-footer text-muted">
-        Author: {{ blog.author.first_name }} {{ blog.author.last_name }}
+    <div class="card-footer p-0">
+        {% include('comments.html') %}
     </div>
-    
 </div>
 
 {% endfor %}
-
+<!-- Blog feed -->
 {% endblock %}
