@@ -1,10 +1,8 @@
 <ul class="list-group list-group-flush">
-    {% for f in followings %}
-        <li class="list-group-item"> 
-            <a class="nav-link d-inline-block" href="/{{ f.first_name + f.last_name }}">
-                {{ f.first_name }} {{ f.last_name }}
-            </a>
-            <a class="nav-link d-inline-block float-end text-bg-primary px-2 fw-semibold" href="/profile/unfollow/{{ f.id }}">Unfollow</a>
-        </li>
-    {% endfor %}
+  {% for f in followings %}
+  <li class="list-group-item">
+    <a class="nav-link d-inline-block text-primary" href="/{{ f.username }}"> {{ f.first_name }} {{ f.last_name }} </a>
+    <a class="nav-link d-inline-block float-end text-bg-primary px-2 fw-semibold" href="/profile/unfollow/{{ f.id }}">Unfollow</a>
+  </li>
+  {% endfor %}
 </ul>

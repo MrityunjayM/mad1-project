@@ -19,7 +19,10 @@
 <ul class="list-group list-group-flush">
 {% for u in users %}
 
-    <li class="list-group-item">{{ u.first_name }} {{ u.last_name }}
+    <li class="list-group-item">
+        <a href="/{{ u.username }}" class="nav-link d-inline float-start">
+            {{ u.first_name }} {{ u.last_name }}
+        </a>
         <a href="/profile/follow/{{ u.id }}" class="btn d-inline float-end btn-primary">
             <i class="bi bi-person-plus"></i> Follow</a>
     </li>

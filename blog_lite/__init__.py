@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 APP_SECRET = getenv("SECRET_KEY") or "thisisasecret"
 DB_NAME = "blog_lite.sqlite3"
-print(APP_SECRET)
+
 db = SQLAlchemy()
 
 def create_app():

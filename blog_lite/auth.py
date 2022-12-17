@@ -1,7 +1,7 @@
-from flask import Blueprint, request, render_template, \
-    redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user, confirm_login
+import nanoid
 import re
 
 from . import db
@@ -40,9 +40,10 @@ def signup():
         else:
             # Generate password hash
             pass_hash = generate_password_hash(password1, 10)
+            unique_username=f"{''.join(first_name.lower().split(' '))}-{nanoid.generate(size=6)}"
             # Create new user
             new_user = User(first_name=first_name, last_name=last_name, 
-                            email=email, password=pass_hash)
+                            email=email, password=pass_hash, username=unique_username)
             # Add user to database
             db.session.add(new_user)
             db.session.commit()

@@ -1,38 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
-{% block title %}
-    {{ user.first_name }} {{ user.last_name }}
-{% endblock %}
+{% block title %} {{ user.first_name }} {{ user.last_name }} {% endblock %} 
 
 {% block body %}
 
 <div class="card mb-3">
-    <img src="{{ url_for('static', filename='/images/profile.png') }}" class="card-img-top" 
-            height="200" alt="user profile" />
-    
-    <div class="card-body">
-        <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
-        
-        <p class="card-text">
-            <span class="badge text-bg-info fs-6">Blogs: {{ user.blogs | length }}</span>
-            <a class="badge text-bg-primary fs-6" href="/profile/?display=followings">
-                Following: {{ user.followings | length }}
-            </a>
-            <a class="badge text-bg-primary fs-6" href="/profile/?display=followwers">
-                Followers: {{ followers | length  }}
-            </a>
-        </p>
-    </div>
+  <img src="{{ url_for('static', filename='/images/profile.png') }}" class="card-img-top" height="200" alt="user profile" />
+
+  <div class="card-body">
+    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+
+    <p class="card-text">
+      <span class="badge text-bg-info fs-6">Blogs: {{ user.blogs | length }}</span>
+      <a class="badge text-bg-primary fs-6" href="/profile/?display=followings"> Following: {{ user.followings | length }} </a>
+      <a class="badge text-bg-primary fs-6" href="/profile/?display=followers"> Followers: {{ followers | length }} </a>
+    </p>
+  </div>
 </div>
 <hr />
 <br />
 
-{% if dis_followers %}
-    {% include('user_followers.html') %}
-{% elif dis_followings %}
-    {% include('user_followings.html') %}
-{% elif user.blogs | length %}
-    {% include('user_blogs.html') %}
-{% endif %}
+{% if dis_followers %} 
+    {% include('user_followers.html') %} 
+{% elif dis_followings %} 
+    {% include('user_followings.html') %} 
+{% elif user.blogs | length %} 
+    {% include('user_blogs.html') %} 
+{% endif %} 
 
 {% endblock %}
