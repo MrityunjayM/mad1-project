@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 APP_SECRET = getenv("SECRET_KEY") or "thisisasecret"
 DB_NAME = "blog_lite.sqlite3"
-
+print(APP_SECRET)
 db = SQLAlchemy()
 
 def create_app():
@@ -30,7 +30,7 @@ def create_app():
     from .profile import profile
     app.register_blueprint(profile, url_prefix="/profile")
 
-    from .models import User, Blog, Followers, Likes
+    from .models import User
 
     create_database()
 
