@@ -33,23 +33,35 @@
 <!-- =================================== -->
 
 <!-- Blog feed -->
+{% if not blogs | length %}
+    <div class="card">
+        <div class="card-body">
+            <p class="text-muted text-center">
+                There are no blogs on your feed.
+                <br />
+                Connect/Follow other to see what they're posting...
+            </p>
+        </div>
+    </div>
+{% endif %}
 {%for blog in blogs %}
-
 <div class="card mb-3" id="blog{{ blog.id }}">
     {%if blog.image_path %}
     <img src="{{ url_for('static', filename='images/') }}/{{ blog.image_path }}" 
         class="card-img-top" height="250" alt="{{blog.image_path}}" />
     {% endif %}
     <div class="card-body">
-        <h2 class="card-title">
-            {{ blog.title }} <span class="text-muted fs-5">@{{ blog.author.first_name }} {{ blog.author.last_name }}</span>
+        <a class="card-link fs-5 d-inline-block" href="/{{blog.author.username}}">@{{ blog.author.first_name }} {{ blog.author.last_name }}</a>
+        <h4 class="card-title">
+            {{ blog.title }}
+            <!-- hyper link to like a blog -->
             <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" class="fs-5 float-end">
                 <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
                 <span class="text-muted"> {{ blog.likes|length }}</span>
             </a>
         </h2>
 
-        <p class="card-text">{{ blog.description }}</p>
+        <p class="card-text" style="text-align: justify;">{{ blog.description }}</p>
     </div>
     <div class="card-footer p-0">
         {% include('comments.html') %}

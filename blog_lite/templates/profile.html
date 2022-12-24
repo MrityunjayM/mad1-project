@@ -12,8 +12,8 @@
 
     <p class="card-text">
       <span class="badge text-bg-info fs-6">Blogs: {{ user.blogs | length }}</span>
-      <a class="badge text-bg-primary fs-6" href="/profile/?display=followings"> Following: {{ user.followings | length }} </a>
-      <a class="badge text-bg-primary fs-6" href="/profile/?display=followers"> Followers: {{ followers | length }} </a>
+      <a class="badge text-bg-primary fs-6" href="/profile/?display=followedby"> Followed: {{ user.followedby|length }} </a>
+      <a class="badge text-bg-primary fs-6" href="/profile/?display=followed"> Followed By: {{ followers|length }} </a>
     </p>
   </div>
 </div>

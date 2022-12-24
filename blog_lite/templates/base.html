@@ -1,91 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} Mad Project - 1 {% endblock %}</title>
 
-    <link type="image/png" sizes="16x16" rel="icon" href="{{ url_for('static', filename='favicon-16.png')}}">
-    <link type="image/png" sizes="32x32" rel="icon" href="{{ url_for('static', filename='favicon-32.png')}}">
+    <link type="image/png" sizes="16x16" rel="icon" href="{{ url_for('static', filename='favicon-16.png')}}" />
+    <link type="image/png" sizes="32x32" rel="icon" href="{{ url_for('static', filename='favicon-32.png')}}" />
 
     <!-- Bootstrap Icons Link -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
     <!-- Bootstrap CSS Link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
     <style>
-      .container { max-width: 750px !important; }
-      a { text-decoration: none !important; }
-      .bg-light-gray { background-color: #f1f4f1 !important;}
+      .container {
+        max-width: 750px !important;
+      }
+      a {
+        text-decoration: none !important;
+      }
+      .bg-light-gray {
+        background-color: #f1f4f1 !important;
+      }
     </style>
   </head>
-<body class="d-flex flex-column justify-content-between" style="min-height: 100vh;">
-
+  <body class="d-flex flex-column justify-content-between" style="min-height: 100vh; background-color: #fafcfd">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0" style="z-index: 9999;">
-        <div class="container d-flex justify-content-between">
-          <a class="navbar-brand" href="/">Blog Lite</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0" style="z-index: 9999">
+      <div class="container d-flex justify-content-between">
+        <a class="navbar-brand" href="/">Blog Lite</a>
 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigationBar" 
-                  aria-controls="navigationBar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          
-          <div class="collapse navbar-collapse flex-grow-0" id="navigationBar">
-            <ul class="navbar-nav">
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a href="/profile/search" class="nav-link">Search</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/profile" title="profile">{{ user.first_name or 'Profile'}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/logout">LogOut</a>
-              </li>
-              {% endif %}
-            </ul>
-          </div>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navigationBar"
+          aria-controls="navigationBar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse flex-grow-0" id="navigationBar">
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="/profile/search" class="nav-link">Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile" title="profile">{{ user.first_name or 'Profile'}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">LogOut</a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- main content -->
-    <main class="container flex-grow-1 pt-2 mb-2" style="background-color: #f4f4f4;">
-
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div aria-live="polite" aria-atomic="true" class="position-relative">
-          <div class="toast-container top-0 end-0 p-3">
-        
+    <main class="container flex-grow-1 pt-2 mb-2" style="background-color: #f4f4f4">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+      <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container top-0 end-0 p-3">
           {% for (category, message) in messages %}
-            <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="d-flex">
-                <div class="toast-body text-{{ 'danger' if category == 'message' else category }}">
-                  {{ message }}
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
+          <div class="toast align-items-center show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body text-{{ 'danger' if category == 'message' else category }}">{{ message }}</div>
+              <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-            {% endfor %}
-
           </div>
+          {% endfor %}
         </div>
-        {% endif %}
-      {% endwith %}
-
-      {% block body %}Main Content{% endblock %}
+      </div>
+      {% endif %} {% endwith %} {% block body %}Main Content{% endblock %}
     </main>
 
     <!-- Footer -->
     <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-dark">
       <!-- Copyright -->
-      <div class="container text-white mb-3 mb-md-0">
-        Mrityunjay Mishra &COPY; 2022. All rights reserved.
-      </div>
+      <div class="container text-white mb-3 mb-md-0">Mrityunjay Mishra &COPY; 2022. All rights reserved.</div>
       <!-- Copyright -->
-  </div>
+    </div>
 
     <!-- Bootstrap JS Link -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
