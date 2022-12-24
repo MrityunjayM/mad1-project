@@ -2,17 +2,17 @@
 
 ### Setup the app structure
 
-- Create virtual environment -> ✔ done
-- Install dependecies        -> ✔ done
-- Create `blog_lite` Module  -> ✔ done
-- Create initiater functions -> ✔ done
+- Create virtual environment                -> ✔ done
+- Install dependecies                       -> ✔ done
+- Create `blog_lite` Module                 -> ✔ done
+- Create initiater functions                -> ✔ done
 
 ### Setup Models
-- Create User Model     -> ✔ done
-- Create Blog Model     -> ✔ done
-- Create Likes Model    -> ✔ done
-- Create Follower Model -> ✔ done
-- Create Comment Model  -> ✔ done
+- Create User Model                         -> ✔ done
+- Create Blog Model                         -> ✔ done
+- Create Likes Model                        -> ✔ done
+- Create Follower Model                     -> ✔ done
+- Create Comment Model                      -> ✔ done
 
 ### Setup Templates
 - Create `base.html` template               -> ✔ done
@@ -33,18 +33,17 @@
 ### Functionalities
 
 ##### User Auth
-- User signup   -> ✔ done
-- User login    -> ✔ done
-- View Profile  -> ✔ done
+- User signup                                   -> ✔ done
+- User login                                    -> ✔ done
+- View Profile                                  -> ✔ done
 ##### Blog
-- Blog creation         -> ✔ done
-- Show Blog in Feed     -> ✔ done
-- Like blog in feed     -> ✔ done
-- Dislike blog in feed  -> ✔ done
+- Blog creation                                 -> ✔ done
+- Show Blog in Feed                             -> ✔ done
+- Like/Dislike blog in feed                     -> ✔ done
+- Comment on blog in feed                       -> ✔ done
 ##### Search User
-- Search users                      -> ✔ done
-- Follow user in searched list      -> ✔ done
-- Unfollow user in following list   -> ✔ done
+- Search users                                  -> ✔ done
+- Follow/Unfollow user in searched list         -> ✔ done
 ##### User Profile
 - Show no of blogs by user profile section      -> ✔ done
 - Show no of followers profile section          -> ✔ done
