@@ -8,15 +8,15 @@
     <div class="card-body">
         <h2 class="card-title">
             {{ blog.title }}
-            <a title="Like" href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" style="font-size: 20px; float: right;">
+            <a title="Like" href="/blogs/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" style="font-size: 20px; float: right;">
                 <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
                 <span class="text-muted">{{ blog.likes|length }}</span>
             </a>
             {% if blog.author.id == user.id %}
-                <a title="Edit" href="/blog/{{ blog.id }}/edit" class="fs-5">
+                <a title="Edit" href="/blogs/{{ blog.id }}/edit" class="fs-5">
                     <i class="bi bi-pencil-square"></i>
                 </a>
-                <a title="delete" href="/blog/{{ blog.id }}/delete" class="fs-5 text-danger">
+                <a title="delete" href="/blogs/{{ blog.id }}/delete" class="fs-5 text-danger">
                     <i class="bi bi-trash"></i>
                 </a>
             {% endif %}

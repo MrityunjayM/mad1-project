@@ -41,11 +41,11 @@ def create_app():
     from .models import User
 
     # register error handler
-    @app.errorhandler(Exception)
-    def basic_error(error):
-        print(error)
-        flash("Something went wrong!!", category='danger')
-        return redirect('/')
+    # @app.errorhandler(Exception)
+    # def basic_error(error):
+    #     print(error)
+    #     flash("Something went wrong!!", category='danger')
+    #     return redirect('/')
 
     create_database()
 

@@ -55,7 +55,7 @@
         <h4 class="card-title">
             {{ blog.title }}
             <!-- hyper link to like a blog -->
-            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" class="fs-5 float-end">
+            <a href="/blogs/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" class="fs-5 float-end">
                 <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
                 <span class="text-muted"> {{ blog.likes|length }}</span>
             </a>

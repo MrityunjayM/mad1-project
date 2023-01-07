@@ -9,7 +9,7 @@
         <img src="{{ url_for('static', filename='images/') }}/{{ blog.image_path }}" 
             class="card-img-top mb-3 mb-lg-4" height="350" alt="{{ blog.image_path }}" />
 
-        <form action="/blog/{{ blog.id }}/edit" method="post" enctype="multipart/form-data">
+        <form action="/blogs/{{ blog.id }}/edit" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <input type="text" class="form-control" id="title" name="title"
                     value="{{ blog.title }}" placeholder="Give a title for you blog" autofocus required />

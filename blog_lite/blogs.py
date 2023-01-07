@@ -10,19 +10,6 @@ BASE_PATH = os.path.abspath(os.path.curdir)
 blog = Blueprint("blogs", __name__)
 
 
-@blog.route("/<string:username>", methods=["GET"])
-def display_user(username: str):
-    u = User.query.filter_by(username=username).first()
-    f = Followers.query.filter_by(user_id=u.id).all()
-
-    return render_template('searched_profile.html',
-                           blogs=u.blogs,
-                           followers=f,
-                           followings=u.followedby,
-                           searched_user=u,
-                           user=current_user)
-
-
 @blog.route("/", methods=["GET"])
 @login_required
 def home():

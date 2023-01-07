@@ -5,13 +5,29 @@ import nanoid
 import re
 
 from . import db
-from .models import User
+from .models import User, Followers
 
 auth = Blueprint("auth", __name__)
 
 # regex for email validation
 email_validation_regex = r"\b[aa-zA-Z0-9.%_+-]+@[a-z0-9-.]+.[a-z|A-Z]{2,}\b"
 
+
+@auth.route("/<string:username>", methods=["GET"])
+def display_user(username: str):
+    u = User.query.filter_by(username=username).first()
+    f = Followers.query.filter_by(user_id=u.id).all()
+
+    # make a list of blog.id which user have liked
+    liked_posts = list(map(lambda l: l.blog_id, current_user.likes))
+
+    return render_template('searched_profile.html',
+                           blogs=u.blogs,
+                           followers=f,
+                           followings=u.followedby,
+                           likes=liked_posts,
+                           searched_user=u,
+                           user=current_user)
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -37,7 +53,7 @@ def signup():
             return redirect(url_for("auth.signup")), 400
         else:
             # Generate password hash
-            pass_hash = generate_password_hash(password1, 10)
+            pass_hash = generate_password_hash(password1, 12)
             unique_username = f"{''.join(first_name.lower().split(' '))}-{nanoid.generate(size=6)}"
             # Create new user
             new_user = User(first_name=first_name, last_name=last_name,
