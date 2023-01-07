@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!-- create blog form -->
+<div class="card">    
+    <div class="card-body">
+        <form action="/blogs/create" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="title" name="title"
+                    placeholder="Give a title for you blog" required />
+            </div>
+
+            <div class="mb-3">
+                <textarea class="form-control" id="description" name="description" rows="3" required 
+                    placeholder="Write your blog here."></textarea>
+            </div>
+
+            <div class="mb-3">
+                <input class="form-control" id="blogImage" name="image"
+                    type="file" accept="image/png, image/jpg, image/jpeg" />
+            </div>              
+
+            <div class="d-flex justify-content-end mb-3 mb-lg-4">
+                <button type="submit" class="btn btn-primary px-3"><i class="bi bi-send-plus me-2"></i>Post</button>
+            </div>
+          </form>
+    </div>
+</div>
+<!-- create blog form -->
+<hr />
+<br />
+<!-- =================================== -->
+
+<!-- Blog feed -->
+{% if not blogs | length %}
+    <div class="card">
+        <div class="card-body">
+            <p class="text-muted text-center">
+                There are no blogs on your feed.
+                <br />
+                Connect/Follow other to see what they're posting...
+            </p>
+        </div>
+    </div>
+{% endif %}
+{%for blog in blogs %}
+<div class="card mb-3" id="blog{{ blog.id }}">
+    {%if blog.image_path %}
+    <img src="{{ url_for('static', filename='images/') }}/{{ blog.image_path }}" 
+        class="card-img-top" height="250" alt="{{blog.image_path}}" />
+    {% endif %}
+    <div class="card-body">
+        <a class="card-link fs-5 d-inline-block" href="/{{blog.author.username}}">@{{ blog.author.first_name }} {{ blog.author.last_name }}</a>
+        <h4 class="card-title">
+            {{ blog.title }}
+            <!-- hyper link to like a blog -->
+            <a href="/blog/{{ blog.id }}/{{ 'dislike' if blog.id in likes else 'like' }}/{{ user.id }}" class="fs-5 float-end">
+                <i class="bi bi-hand-thumbs-up{{ '-fill' if blog.id in likes else '' }} text-warning"></i>
+                <span class="text-muted"> {{ blog.likes|length }}</span>
+            </a>
+        </h2>
+
+        <p class="card-text" style="text-align: justify;">{{ blog.description }}</p>
+    </div>
+    <div class="card-footer p-0">
+        {% include('comments.html') %}
+    </div>
+</div>
+
+{% endfor %}
+<!-- Blog feed -->
+{% endblock %}

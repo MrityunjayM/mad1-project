@@ -1,6 +1,6 @@
 from os import getenv, path
-from flask import Flask, redirect, flash
-from flask_login import LoginManager
+from flask import Flask, redirect, flash, render_template, url_for
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 
 APP_SECRET = getenv("SECRET_KEY") or "thisisasecret"
@@ -20,9 +20,15 @@ def create_app():
     db.init_app(app)
     app.app_context().push()
 
+    @app.route('/', methods=['GET'])
+    def index():
+        if current_user.is_authenticated:
+            return redirect(url_for('blogs.home'))
+        return render_template('index.html', user=False)
+
     # blog route blueprint
     from .blogs import blog
-    app.register_blueprint(blog, url_prefix="/")
+    app.register_blueprint(blog, url_prefix="/blogs")
 
     # auth route blueprint
     from .auth import auth

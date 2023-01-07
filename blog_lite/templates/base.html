@@ -50,7 +50,7 @@
 
         <div class="collapse navbar-collapse flex-grow-0" id="navigationBar">
           <ul class="navbar-nav">
-            {% if user.is_authenticated %}
+            {% if user and user.is_authenticated %}
             <li class="nav-item">
               <a href="/profile/search" class="nav-link">Search</a>
             </li>
@@ -67,7 +67,7 @@
     </nav>
 
     <!-- main content -->
-    <main class="container flex-grow-1 pt-2 mb-2" style="background-color: #f4f4f4">
+    <main class="container flex-grow-1 py-2 h-100" style="background-color: #f4f4f4">
       {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
       <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container top-0 end-0 p-3">
@@ -81,7 +81,10 @@
           {% endfor %}
         </div>
       </div>
-      {% endif %} {% endwith %} {% block body %}Main Content{% endblock %}
+      {% endif %} 
+      {% endwith %}
+
+      {% block body %} Main Content {% endblock %}
     </main>
 
     <!-- Footer -->

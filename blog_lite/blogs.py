@@ -33,10 +33,10 @@ def home():
     # make a list of blog.id which user have liked
     liked_posts = list(map(lambda l: l.blog_id, current_user.likes))
 
-    return render_template("index.html", blogs=blogs, likes=liked_posts, user=current_user)
+    return render_template("blog_feed.html", blogs=blogs, likes=liked_posts, user=current_user)
 
 
-@blog.route("/blogs/create", methods=["GET", "POST"])
+@blog.route("/create", methods=["GET", "POST"])
 @login_required
 def create_blog():
     if request.method == "POST":
@@ -63,7 +63,7 @@ def create_blog():
     return render_template("blog.html", user=current_user)
 
 
-@blog.route("/blog/<int:blog_id>/edit", methods=["GET", "POST"])
+@blog.route("/<int:blog_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_blog(blog_id: int):
     _blog = Blog.query.get(blog_id)
@@ -94,7 +94,7 @@ def edit_blog(blog_id: int):
     return render_template("edit_blog.html", blog=_blog, user=current_user)
 
 
-@blog.route("/blog/<int:blog_id>/delete", methods=["GET"])
+@blog.route("/<int:blog_id>/delete", methods=["GET"])
 @login_required
 def delete_blog(blog_id: int):
     _blog = Blog.query.get(blog_id)
@@ -111,7 +111,7 @@ def delete_blog(blog_id: int):
         return redirect(url_for('blogs.home'))
 
 
-@blog.route("/blog/<int:blog_id>/like/<int:user_id>", methods=["GET"])
+@blog.route("/<int:blog_id>/like/<int:user_id>", methods=["GET"])
 @login_required
 def like_blog(blog_id: int, user_id: int):
     # create user like
@@ -123,7 +123,7 @@ def like_blog(blog_id: int, user_id: int):
     return redirect(url_for("blogs.home") + f"#blog{blog_id}")
 
 
-@blog.route("/blog/<int:blog_id>/dislike/<int:user_id>", methods=["GET"])
+@blog.route("/<int:blog_id>/dislike/<int:user_id>", methods=["GET"])
 @login_required
 def dislike_blog(blog_id: int, user_id: int):
     Likes.query.filter_by(user_id=user_id, blog_id=blog_id).delete()
@@ -132,7 +132,7 @@ def dislike_blog(blog_id: int, user_id: int):
     return redirect(url_for("blogs.home") + f"#blog{blog_id}")
 
 
-@blog.route("/blog/<int:blog_id>/comments", methods=["POST"])
+@blog.route("/<int:blog_id>/comments", methods=["POST"])
 @login_required
 def add_comment(blog_id: int):
     user_id = current_user.id
