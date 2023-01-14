@@ -10,3 +10,5 @@ secret.txt
 blog_lite/static/images/**.**
 .prettierrc
 *.sql
+.pylintrc
+**/.http

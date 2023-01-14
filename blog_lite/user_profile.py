@@ -1,48 +1,54 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect
 from flask_login import login_required, current_user
 from . import db
 from .models import User, Followers
 
 profile = Blueprint("profile", __name__)
 
+
 @profile.route("/", methods=["GET"])
 @login_required
 def home():
     q = request.args.get('display')
-    dis_followers = q == 'followers'
-    dis_followings = q == 'followings'
+    dis_followers = q == 'followed'
+    dis_followings = q == 'followedby'
     followings_users = []
-    followers = Followers.query.with_entities(Followers.user_id).filter_by(follower_id = current_user.id).all()
-    
+    followers = Followers.query.with_entities(
+        Followers.user_id).filter_by(follower_id=current_user.id).all()
+
     fls = User.query.filter(User.id.in_([x for x, *y in followers])).all()
 
     if dis_followings:
         following = Followers.query.with_entities(
             Followers.follower_id
-        ).filter_by(user_id = current_user.id).all()
+        ).filter_by(user_id=current_user.id).all()
 
-        maped_following_ids = {x for x, *y in following }
-        followings_users = User.query.filter(User.id.in_(maped_following_ids)).all()
+        maped_following_ids = {x for x, *y in following}
+        followings_users = User.query.filter(
+            User.id.in_(maped_following_ids)).all()
 
     return render_template("profile.html",
-                            dis_followers=dis_followers,
-                            dis_followings=dis_followings,
-                            followers=fls,
-                            followings=followings_users,
-                            blogs=current_user.blogs,
-                            user=current_user)
+                           dis_followers=dis_followers,
+                           dis_followings=dis_followings,
+                           followers=fls,
+                           followings=followings_users,
+                           blogs=current_user.blogs,
+                           user=current_user)
 
 
 @profile.route("/search", methods=["GET"])
 @login_required
 def search_profile():
     search = request.args.get("u")
-    users_query = User.query.filter(User.first_name.like(f"%{search}%") |\
-        User.last_name.like(f"%{search}%"))
-    print(users_query)
-    users = users_query.all()
+    if search:
+        users_query = User.query.filter(User.first_name.like(f"%{search}%") |
+                                        User.last_name.like(f"%{search}%"))
+        users = users_query.all()
+        followed = Followers.query.filter_by(user_id = current_user.id).all()
+        return render_template("profile_search.html", query=search, followed=followed, users=users, user=current_user)
 
-    return render_template("search_profile.html", query=search, users=users, user=current_user)
+    return render_template("profile_search.html", query=search,followed=[], users=[], user=current_user)
+
 
 @profile.route("/follow/<int:follower_id>", methods=["GET"])
 @login_required
@@ -53,13 +59,15 @@ def follow(follower_id: int):
     db.session.add(flr)
     db.session.commit()
 
-    return redirect('/')
+    return redirect(request.referrer or '/')
+
 
 @profile.route("/unfollow/<int:follower_id>", methods=["GET"])
 @login_required
 def unfollow(follower_id: int):
     user_id = current_user.id
-    flr = Followers.query.filter_by(user_id=user_id, follower_id=follower_id).first()
+    flr: Followers = Followers.query.filter_by(
+        user_id=user_id, follower_id=follower_id).first()
 
     db.session.delete(flr)
     db.session.commit()

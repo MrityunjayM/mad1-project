@@ -1,5 +1,6 @@
-Flask
+Flask==2.2.2
+Flask-Bcrypt==1.0.1
+Flask-Login==0.6.2
+Flask-RESTful==0.3.9
 Flask-SQLAlchemy==2.5.1
-Flask-bcrypt
-Flask-Login
-nanoid
+nanoid==2.0.0

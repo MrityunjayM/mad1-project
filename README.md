@@ -1,7 +1,6 @@
 # Blog Lite [MAD-1 Project]
 
-Blog Lite is a small blogging website where users can create blogs
-and share their knowladge with others.
+BlogLite is a multi-user blogging platform, Where users can create blogs and share their thoughts/understandings with others and see blogs which others create by following them. Additionally users can like others blogs and give them feedback in the comment section.
 
 #### Features:
 
@@ -16,4 +15,5 @@ and share their knowladge with others.
 - User can create a blog
 - User can see others blogs
 - User can like others blogs
-- User can edit/delete their blogs
+- User can comment on blogs created by others or by self
+- User can edit/delete their own blogs

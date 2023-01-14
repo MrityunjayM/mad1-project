@@ -1,6 +1,6 @@
-<form action="/blog/{{ blog.id }}/comments" method="post">
-    <div class="d-flex align-items-start justify-content-between">
+<form action="/blogs/{{ blog.id }}/comments" method="post">
+    <div class="d-flex align-items-start justify-content-between gap-1">
         <textarea name="comment" id="comment" class="form-control flex-grow-1" rows="1" placeholder="Leave a comment..." required min="10"></textarea>
-        <button title="comment" type="submit" class="btn"><i class="bi bi-plus-square-dotted"></i></button>
+        <button title="comment" type="submit" class="btn bg-light-gray"><i class="bi bi-plus-square-dotted"></i></button>
     </div>
 </form>

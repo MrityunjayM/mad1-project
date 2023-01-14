@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -13,8 +14,9 @@ class User(db.Model, UserMixin):
     # relationshps
     blogs = db.relationship("Blog", backref="author")
     likes = db.relationship("Likes", backref="user")
-    followings = db.relationship("Followers", backref="follower")
+    followedby = db.relationship("Followers", backref="follower")
     comments = db.relationship("Comments", backref="author")
+
 
 class Blog(db.Model):
     __tablename__ = "blog"
@@ -28,6 +30,7 @@ class Blog(db.Model):
     likes = db.relationship("Likes", backref="blog")
     comments = db.relationship('Comments', backref="blog")
 
+
 class Comments(db.Model):
     __tablename__ = "comments"
     id = db.Column(db.Integer, primary_key=True)
@@ -35,6 +38,7 @@ class Comments(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     blog_id = db.Column(db.Integer, db.ForeignKey("blog.id"), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now())
+
 
 class Followers(db.Model):
     __tablename__ = "followers"
@@ -47,6 +51,7 @@ class Followers(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 #     follower_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
 
 class Likes(db.Model):
     __tablename__ = "likes"
