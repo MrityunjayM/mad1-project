@@ -76,7 +76,7 @@ def edit_blog(blog_id: int):
         db.session.add(_blog)
         db.session.commit()
 
-        return redirect(url_for(".home") + f"#blog{blog_id}")
+        return redirect(request.referrer or url_for(".home") + f"#blog{blog_id}")
 
     return render_template("edit_blog.html", blog=_blog, user=current_user)
 
@@ -89,13 +89,16 @@ def delete_blog(blog_id: int):
         # delete all likes of the blog
         Likes.query.filter_by(blog_id=blog_id).delete()
         db.session.flush()
+        # delete all comments of the blog
+        Comments.query.filter_by(blog_id=blog_id).delete()
+        db.session.flush()
         # delete blog
         db.session.delete(_blog)
         db.session.commit()
         return redirect(url_for('blogs.home'))
     else:
         flash('You can\'t delete others blog', category='danger')
-        return redirect(url_for('blogs.home'))
+        return redirect(request.referrer or url_for('blogs.home'))
 
 
 @blog.route("/<int:blog_id>/like/<int:user_id>", methods=["GET"])
@@ -107,7 +110,7 @@ def like_blog(blog_id: int, user_id: int):
     db.session.add(new_like)
     db.session.commit()
 
-    return redirect(url_for("blogs.home") + f"#blog{blog_id}")
+    return redirect(request.referrer or url_for("blogs.home") + f"#blog{blog_id}")
 
 
 @blog.route("/<int:blog_id>/dislike/<int:user_id>", methods=["GET"])
@@ -116,7 +119,7 @@ def dislike_blog(blog_id: int, user_id: int):
     Likes.query.filter_by(user_id=user_id, blog_id=blog_id).delete()
     db.session.commit()
 
-    return redirect(url_for("blogs.home") + f"#blog{blog_id}")
+    return redirect(request.referrer or url_for("blogs.home") + f"#blog{blog_id}")
 
 
 @blog.route("/<int:blog_id>/comments", methods=["POST"])
@@ -132,4 +135,4 @@ def add_comment(blog_id: int):
 
     db.session.add(new_comment)
     db.session.commit()
-    return redirect(url_for('blogs.home') + f"#blog{blog_id}")
+    return redirect(request.referrer or url_for('blogs.home') + f"#blog{blog_id}")
