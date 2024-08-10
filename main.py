@@ -18,4 +18,4 @@ api.add_resource(BlogLikeResource,
                  "/api/blogs/<int:blog_id>/like/<int:user_id>")
 
 if __name__ == "__main__":
-    app.run(debug=DEBUG)
+    app.run(host='0.0.0.0',debug=DEBUG)
