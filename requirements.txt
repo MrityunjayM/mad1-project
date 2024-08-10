@@ -3,5 +3,6 @@ Flask-Bcrypt==1.0.1
 Flask-Login==0.6.2
 Flask-RESTful==0.3.9
 Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4
 Werkzeug==2.2.2
 nanoid==2.0.0
