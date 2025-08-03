@@ -12,3 +12,5 @@ blog_lite/static/images/**.**
 *.sql
 .pylintrc
 **/.http
+
+.DS_Store
