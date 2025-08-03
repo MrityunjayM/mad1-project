@@ -1,0 +1,9 @@
+.git
+.DS_Store
+__pycache__/**
+blog_lite/__pycache__/**
+Pipfile*
+
+.vscode
+
+*.sqlite3
